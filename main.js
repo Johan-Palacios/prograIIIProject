@@ -2,7 +2,7 @@ import './style.css'
 
 document.querySelector('#app').innerHTML = `
   <div>
-    <h1>VIDA Y SALUD SEGUNDO INTENTO HOLA</h1>
+    <h1>VIDA Y SALUD SEGUNDO INTENTO HOLA :333333</h1>
     
   </div>
 `
