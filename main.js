@@ -3,10 +3,10 @@ import './style.css'
 document.querySelector('#app').innerHTML = `
   <div>
 
-  
+
     <!--header with the logo-->
     <header>
-        <h1 id="title">Bienvenido al Portal de Salud y Bienestar</h1>
+        <h1 id="title">Bienvenido al  Mejor Portal de Salud y Bienestar</h1>
     </header>
     <!--an extra menu cuz i can-->
     <nav>
