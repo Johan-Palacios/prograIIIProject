@@ -7,6 +7,7 @@ import saludImg from './public/salud.png'
 document.querySelector('#app').innerHTML = `
   <div>
     <header>
+        <img src="${saludImg}" class="logo"/>
         <h1 id="title">Bienvenido al Portal de Salud y Bienestar</h1>
     </header>
     <main id="main_sections">
