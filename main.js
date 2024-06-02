@@ -2,7 +2,7 @@ import './style.css'
 
 document.querySelector('#app').innerHTML = `
   <div>
-    <h1>Usuarios Y Paginas Visitadas</h1>
+    <h1>VIDA Y SALUD PRIMER ATTEMP</h1>
     
   </div>
 `
