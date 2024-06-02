@@ -8,7 +8,7 @@ document.querySelector('#app').innerHTML = `
   <div>
     <header>
         <img src="${saludImg}" class="logo" alt="Logo de Salud y Bienestar"/>
-        <h1 id="title">Bienvenido al Portal de Salud y Bienestar</h1>
+        <h1 id="title">Bienvenido al Portal de Salud y Bienestar, HOLAAAA</h1>
     </header>
     <main id="main_sections">
       <section id="pacientes_section">
