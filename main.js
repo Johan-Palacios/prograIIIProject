@@ -10,8 +10,8 @@ document.querySelector('#app').innerHTML = `
     </header>
     <!--an extra menu cuz i can-->
     <nav>
-        <div id="menu1"> 
-            <div> 
+        <div id="menu1">
+            <div>
                 <a href="https://apps3.umg.edu.gt/" Target="_blank">Inicio</a>
                 <a href="https://apps3.umg.edu.gt/" Target="_blank">Experiencia</a>
                 <a href="https://apps3.umg.edu.gt/" Target="_blank">Descripción</a>
@@ -101,11 +101,8 @@ document.querySelector('#app').innerHTML = `
             </table>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2024 Vida Activa | Todos los derechos reservados.</p>
-    </footer>
-    
-    
+
+
   </div>
 `
 

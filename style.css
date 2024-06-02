@@ -29,9 +29,6 @@ body {
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
-  background-image: url("bg1.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
 }
 
 h1 {
@@ -107,7 +104,6 @@ button:focus-visible {
 
 /*DIEGO'S CSS for the index page*/
 header {
-  background-color: #4CAF50;
   color: white;
   padding: 20px;
   text-align: center;
@@ -116,10 +112,16 @@ header {
 #menu1 {
   word-break: break-all;
   font-size: 35px;
-  background-color: rgb(97, 210, 212);
+  background-color: #535bf2;
   color: black;
   text-align: center;
   font-family: Arial, sans-serif;
+}
+
+#menu1 div a {
+  text-decoration: none;
+  color: #f9f9f9;
+
 }
 
 main {
@@ -127,7 +129,7 @@ main {
 }
 
 h2 {
-  color: #4CAF50;
+  color: #535bf2;
 }
 
 table {
@@ -139,7 +141,7 @@ table {
 table,
 th,
 td {
-  border: 1px solid #ddd;
+  border: 1px solid #f9f9f9;
 }
 
 th,
@@ -149,29 +151,19 @@ td {
 }
 
 th {
-  background-color: #4CAF50;
+  background-color: #646cff;
   color: white;
 }
 
-button {
-  padding: 5px 10px;
-  margin-right: 5px;
-  border: none;
-  color: white;
-  background-color: #4CAF50;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #45a049;
-}
-
-footer {
-  background-color: #4CAF50;
-  color: white;
-  text-align: center;
-  padding: 10px;
-  position: fixed;
-  width: 100%;
-  bottom: 0;
-}
+/* button { */
+/*   padding: 5px 10px; */
+/*   margin-right: 5px; */
+/*   border: none; */
+/*   color: white; */
+/*   background-color: #4CAF50; */
+/*   cursor: pointer; */
+/* } */
+/**/
+/* button:hover { */
+/*   background-color: #45a049; */
+/* } */
