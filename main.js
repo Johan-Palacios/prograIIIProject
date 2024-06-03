@@ -44,7 +44,7 @@ document.querySelector('#app').innerHTML = `
         <div class="card">
           <form id="doctor_add_form">
             <label for="nombre_doctor_input">Nombre doctor:</label>
-            <input type="text" name="nombre" value="" placeholder="Ej. Menso Ruiz" id="nombre_doctor_input" autocomplete="off" required>
+            <input type="text" name="nombre" value="" placeholder="Ej. Roberto Ruiz" id="nombre_doctor_input" autocomplete="off" required>
             <label for="especialidad_doctor_input">Especialidad doctor:</label>
             <input type="text" name="Especialidad" placeholder="Ej. Cardiologo" id="especialidad_doctor_input" autocomplete="off" required>
             <button type="submit" id="add_doctor_button">Ingresar doctor</button>
