@@ -167,3 +167,15 @@ th {
 /* button:hover { */
 /*   background-color: #45a049; */
 /* } */
+
+input {
+  border-radius: 10px;
+  border: 1px solid #eeeeff;
+  padding: 6px;
+  outline: none;
+}
+
+/* Estilo cuando el input está en foco */
+input:focus {
+  border-color: #464eec;
+}
