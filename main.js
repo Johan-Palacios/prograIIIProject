@@ -67,9 +67,9 @@ document.querySelector('#app').innerHTML = `
           </tbody>
         </table>
       </section>
-      
 
-      <! -- the only part that I've modified --> 
+
+      <! -- the only part that I've modified -->
       <section id="citas_section">
       <h2>Citas</h2>
       <div class="card">
@@ -97,21 +97,19 @@ document.querySelector('#app').innerHTML = `
           </tbody>
       </table>
   </section>
-  
+
 
   </main>
   </div>
 `
 
-renderPacientes(getPacientes())
-renderDoctores(getDoctores())
-renderCitas(getCitas())
 
 const formAddPacientes = document.querySelector('#paciente_add_form')
+const formAddCitas = document.querySelector("#cita_add_form")
+const formAddDoctor = document.querySelector("#doctor_add_form")
 
 formAddPacientes.addEventListener("submit", async (ev) => {
   ev.preventDefault()
-  const formPaciente = document.querySelector('#paciente_add_form')
   const nombrePaciente = document.querySelector('#nombre_paciente_input').value
   const edadPaciente = document.querySelector('#edad_paciente_input').value
   const generoPaciente = document.querySelector('#genero_paciente_input').value
@@ -133,9 +131,74 @@ formAddPacientes.addEventListener("submit", async (ev) => {
 
   await fetchData(nombrePaciente, edadPaciente, generoPaciente)
 
-  const pacientesRows = document.querySelector('#pacientes_rows')
-
   renderPacientes()
 
-  formPaciente.reset()
+  formAddPacientes.reset()
 })
+
+
+formAddCitas.addEventListener("submit", async (ev) => {
+  ev.preventDefault()
+  const idPaciente = document.querySelector('#paciente_cita_input').value
+  const idDoctor = document.querySelector('#doctor_cita_input').value
+  const fecha = document.querySelector('#date_cita_input').value
+
+  const fetchData = async (idPaciente, idDoctor, fecha) => {
+    idPaciente = parseFloat(idPaciente)
+    idDoctor = parseFloat(idDoctor)
+    console.log(fecha)
+
+    await axios.post('http://127.0.0.1:8000/citas', {
+      id_doctore: idDoctor,
+      id_paciente: idPaciente,
+      fecha: fecha
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+  }
+
+  await fetchData(idPaciente, idDoctor, fecha)
+
+  renderCitas()
+
+  formAddCitas.reset()
+})
+
+
+formAddDoctor.addEventListener("submit", async (ev) => {
+  ev.preventDefault()
+  const nombreDoctor = document.querySelector('#nombre_doctor_input').value
+  const especialidadDoctor = document.querySelector('#especialidad_doctor_input').value
+
+  const fetchData = async (nombreDoctor, especialidadDoctor) => {
+    await axios.post('http://127.0.0.1:8000/doctores', {
+      nombre: nombreDoctor,
+      especialidad: especialidadDoctor
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+  }
+
+  await fetchData(nombreDoctor, especialidadDoctor)
+
+  renderDoctores()
+
+  formAddDoctor.reset()
+})
+
+const refresh = async () => {
+
+  await renderPacientes(await getPacientes())
+
+  await renderDoctores(await getDoctores())
+
+  await renderCitas(await getCitas())
+}
+
+refresh()

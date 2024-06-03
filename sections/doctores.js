@@ -1,94 +1,80 @@
 import '../style.css'
+import axios from 'axios'
 
 
-let doctores = JSON.parse(localStorage.getItem('doctores')) || [];
-
-export const getDoctores = () => {
-  return doctores;
+export const getDoctores = async () => {
+  const doctores = await axios.get("http://127.0.0.1:8000/doctores", {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+  return doctores.data
 }
 
-export const saveDoctoresToLocalStorage = () => {
-  localStorage.setItem('doctores', JSON.stringify(doctores));
-}
-
-export const renderDoctores = () => {
+export const renderDoctores = async () => {
+  const doctores = await getDoctores()
   const doctorsRow = document.querySelector('#doctores_rows');
-  doctorsRow.innerHTML = '';  // Limpiar filas existentes
+  doctores.map((doctorIter) => {
+    if (!document.querySelector(`#doctor_row_${doctorIter.id_doctore}`)) {
 
-  doctores.forEach((doctor) => {
-    const row = document.createElement("tr");
-    row.id = `doctor_row_${doctor.id}`;
+      const row = document.createElement("tr");
+      row.id = `doctor_row_${doctorIter.id_doctore}`;
 
-    const id = document.createElement("td");
-    id.innerText = `${doctor.id}`;
+      const id = document.createElement("td");
+      id.innerText = `${doctorIter.id_doctore}`;
 
-    const name = document.createElement("td");
-    name.id = `doctor_name_${doctor.id}`;
-    name.innerText = `${doctor.name}`;
+      const name = document.createElement("td");
+      name.id = `doctor_name_${doctorIter.id_doctore}`;
+      name.innerText = `${doctorIter.nombre}`;
 
-    const specialty = document.createElement("td");
-    specialty.id = `doctor_specialty_${doctor.id}`;
-    specialty.innerText = `${doctor.specialty}`;
+      const specialty = document.createElement("td");
+      specialty.id = `doctor_specialty_${doctorIter.id_doctore}`;
+      specialty.innerText = `${doctorIter.especialidad}`;
 
-    const actions = document.createElement("td");
+      const actions = document.createElement("td");
 
-    const deleteBtn = document.createElement("button");
-    deleteBtn.innerText = "Eliminar";
-    deleteBtn.addEventListener("click", () => {
-      const index = doctores.findIndex(doc => doc.id === doctor.id);
-      if (index !== -1) {
-        doctores.splice(index, 1);
-        saveDoctoresToLocalStorage();
-        renderDoctores();
-      }
-    });
+      const deleteBtn = document.createElement("button");
+      deleteBtn.innerText = "Eliminar";
+      deleteBtn.addEventListener("click", async () => {
+        const element = document.querySelector(`#doctor_row_${doctorIter?.id_doctore}`)
+        await axios.delete(`http://127.0.0.1:8000/doctores/${doctorIter?.id_doctore}`)
+        element.remove()
+      })
 
-    const editBtn = document.createElement("button");
-    editBtn.innerText = "Editar";
-    editBtn.addEventListener("click", () => {
-      const newName = prompt("Ingrese el nuevo nombre del doctor:", doctor.name);
-      const newSpecialty = prompt("Ingrese la nueva especialidad del doctor:", doctor.specialty);
-      
-      if (newName !== null && newSpecialty !== null) {
-        doctor.name = newName;
-        doctor.specialty = newSpecialty;
-        saveDoctoresToLocalStorage();
-        renderDoctores();
-      }
-    });
+      const editBtn = document.createElement("button");
+      editBtn.innerText = "Editar";
+      editBtn.addEventListener("click", () => {
+        let doctor = {
+          nombre: "",
+          especialidad: ""
+        }
+        const nombre = prompt("Ingrese Nombre del Doctor", name.innerHTML)
+        const especialidad = prompt("Ingrese la especialidad del Doctor", specialty.innerHTML)
 
-    actions.appendChild(deleteBtn);
-    actions.appendChild(editBtn);
-    row.appendChild(id);
-    row.appendChild(name);
-    row.appendChild(specialty);
-    row.appendChild(actions);
+        if (nombre !== null && especialidad !== null) {
+          doctor.nombre = nombre
+          doctor.especialidad = especialidad
 
-    doctorsRow.appendChild(row);
-  });
-}
+          name.innerHTML = nombre
+          specialty.innerHTML = especialidad
 
-document.addEventListener('DOMContentLoaded', () => {
-  document.getElementById('doctor_add_form').addEventListener('submit', function(event) {
-    event.preventDefault();
-    
-    const nombre = document.getElementById('nombre_doctor_input').value;
-    const especialidad = document.getElementById('especialidad_doctor_input').value;
-    
-    if (nombre && especialidad) {
-      const nuevoDoctor = {
-        id: doctores.length > 0 ? doctores[doctores.length - 1].id + 1 : 1,
-        name: nombre,
-        specialty: especialidad
-      };
-      doctores.push(nuevoDoctor);
-      saveDoctoresToLocalStorage();
-      renderDoctores();
-      
-      // Limpiar el formulario
-      document.getElementById('doctor_add_form').reset();
+          axios.put(`http://127.0.0.1:8000/doctores/${doctorIter.id_doctore}`, doctor, {
+            headers: {
+              Accept: 'application/json'
+            }
+          })
+        }
+
+      });
+
+      actions.appendChild(deleteBtn);
+      actions.appendChild(editBtn);
+      row.appendChild(id);
+      row.appendChild(name);
+      row.appendChild(specialty);
+      row.appendChild(actions);
+
+      doctorsRow.appendChild(row);
     }
   });
-
-  renderDoctores();  // Renderizar los doctores al cargar la página
-});
+}
