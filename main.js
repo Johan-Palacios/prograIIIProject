@@ -1,8 +1,9 @@
 import './style.css'
 import { getPacientes, renderPacientes } from './sections/pacientes'
-import {getDoctores, renderDoctores} from './sections/doctores'
-import {getCitas, renderCitas} from './sections/citas'
-import saludImg from './public/salud.png'
+import { getDoctores, renderDoctores } from './sections/doctores'
+import { getCitas, renderCitas } from './sections/citas'
+import saludImg from '/salud.png'
+import axios from 'axios'
 
 document.querySelector('#app').innerHTML = `
   <div>
@@ -20,7 +21,10 @@ document.querySelector('#app').innerHTML = `
             <label for="edad_paciente_input">Edad Paciente:</label>
             <input type="number" name="Edad" min="1" max="100" placeholder="Ej. 30" id="edad_paciente_input" autocomplete="off" required>
             <label for="genero_paciente_input">Genero Paciente:</label>
-            <input type="text" name="Genero" value="" placeholder="Ej. Masculino" id="genero_paciente_input" autocomplete="off" required>
+            <select id="genero_paciente_input" name="Genero" required>
+              <option value="F">Femenino</option>
+              <option value="M">Masculino</option>
+            </select>
             <button type="submit" id="add_paciente_button">Ingresar Paciente</button>
           </form>
         </div>
@@ -97,18 +101,35 @@ renderPacientes(getPacientes())
 renderDoctores(getDoctores())
 renderCitas(getCitas())
 
+const formAddPacientes = document.querySelector('#paciente_add_form')
 
-// <a href="https://vitejs.dev" target="_blank">
-//   <img src="${viteLogo}" class="logo" alt="Vite logo" />
-// </a>
-// <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-//   <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-// </a>
-// <h1>Hello Vite!</h1>
-// <div class="card">
-//   <button id="counter" type="button"></button>
-// </div>
-// <p class="read-the-docs">
-//   Click on the Vite logo to learn more
-// </p>
-// setupCounter(document.querySelector('#counter'))
+formAddPacientes.addEventListener("submit", async (ev) => {
+  ev.preventDefault()
+  const formPaciente = document.querySelector('#paciente_add_form')
+  const nombrePaciente = document.querySelector('#nombre_paciente_input').value
+  const edadPaciente = document.querySelector('#edad_paciente_input').value
+  const generoPaciente = document.querySelector('#genero_paciente_input').value
+
+  const fetchData = async (nombrePaciente, edadPaciente, generoPaciente) => {
+    console.log(nombrePaciente, edadPaciente, generoPaciente)
+    edadPaciente = parseFloat(edadPaciente)
+    await axios.post('http://127.0.0.1:8000/pacientes', {
+      nombre: nombrePaciente,
+      edad: edadPaciente,
+      genero: generoPaciente
+    }, {
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    })
+  }
+
+  await fetchData(nombrePaciente, edadPaciente, generoPaciente)
+
+  const pacientesRows = document.querySelector('#pacientes_rows')
+
+  renderPacientes()
+
+  formPaciente.reset()
+})

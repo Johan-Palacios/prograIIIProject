@@ -1,57 +1,66 @@
 import "../style.css"
+import axios from 'axios'
 
-export const getPacientes = () => {
-  const pacientes = [{ id: 1, name: "Juan Pérez", age: 30, gender: "Masculino" }]
-  return pacientes
+export const getPacientes = async () => {
+  const pacientes = await axios.get("http://127.0.0.1:8000/pacientes", {
+    headers: {
+      Accept: 'application/json'
+    }
+  })
+  return pacientes.data
 }
 
-export const renderPacientes = (pacientes) => {
+export const renderPacientes = async () => {
+  const pacientes = await getPacientes()
   pacientes.map((paciente) => {
-    const row = document.createElement("tr")
-    row.id = `paciente_row_${paciente.id}`
-    const pacientesRow = document.querySelector('#pacientes_rows')
+    if (!document.getElementById(`paciente_row_${paciente.id_paciente}`)) {
+      const row = document.createElement("tr")
+      row.id = `paciente_row_${paciente.id_paciente}`
+      const pacientesRow = document.querySelector('#pacientes_rows')
 
-    const id = document.createElement("td")
-    const name = document.createElement("td")
-    name.id = `paciente_name_${paciente.id}`
-    const age = document.createElement("td")
-    age.id = `paciente_age_${paciente.id}`
-    const gender = document.createElement("td")
-    gender.id = `paciente_gender_${paciente.id}`
+      const id = document.createElement("td")
+      const name = document.createElement("td")
+      name.id = `paciente_name_${paciente.id_paciente}`
+      const age = document.createElement("td")
+      age.id = `paciente_age_${paciente.id_paciente}`
+      const gender = document.createElement("td")
+      gender.id = `paciente_gender_${paciente.id_paciente}`
 
-    const actions = document.createElement("td")
+      const actions = document.createElement("td")
 
-    const editBtn = document.createElement("button")
-    editBtn.id = `paciente_edit_${paciente.id}`
-    editBtn.innerText = "Editar"
-    const deleteBtn = document.createElement("button")
-    deleteBtn.innerText = "Eliminar"
+      const editBtn = document.createElement("button")
+      editBtn.id = `paciente_edit_${paciente.id_paciente}`
+      editBtn.innerText = "Editar"
+      const deleteBtn = document.createElement("button")
+      deleteBtn.innerText = "Eliminar"
 
-    editBtn.addEventListener("click", () => {
+      editBtn.addEventListener("click", () => {
 
-    })
+      })
 
-    deleteBtn.addEventListener("click", () => {
-      const element = document.querySelector(`#paciente_row_${paciente.id}`)
-      element.remove()
-    })
-
-
-    id.innerText = `${paciente.id}`
-    name.innerText = `${paciente.name}`
-    age.innerText = `${paciente.age}`
-    gender.innerText = `${paciente.gender}`
+      deleteBtn.addEventListener("click", async () => {
+        const element = document.querySelector(`#paciente_row_${paciente?.id_paciente}`)
+        await axios.delete(`http://127.0.0.1:8000/pacientes/${paciente?.id_paciente}`)
+        element.remove()
+      })
 
 
-    row.appendChild(id)
-    row.appendChild(name)
-    row.appendChild(age)
-    row.appendChild(gender)
-    actions.appendChild(deleteBtn)
-    actions.appendChild(editBtn)
-    row.appendChild(actions)
+      id.innerText = `${paciente?.id_paciente ?? ''}`
+      name.innerText = `${paciente?.nombre ?? ''}`
+      age.innerText = `${paciente?.edad ?? ''}`
+      gender.innerText = `${paciente?.genero ?? ''}`
 
-    pacientesRow.appendChild(row)
+
+      row.appendChild(id)
+      row.appendChild(name)
+      row.appendChild(age)
+      row.appendChild(gender)
+      actions.appendChild(deleteBtn)
+      actions.appendChild(editBtn)
+      row.appendChild(actions)
+
+      pacientesRow.appendChild(row)
+    }
   })
 
 }
