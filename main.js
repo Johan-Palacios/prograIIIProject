@@ -1,11 +1,12 @@
 import './style.css'
 import { getPacientes, renderPacientes } from './sections/pacientes'
-import {getDoctores, renderDoctores} from './sections/doctores'
-import {getCitas, renderCitas} from './sections/citas'
+import { getDoctores, renderDoctores } from './sections/doctores'
+import { getCitas, renderCitas } from './sections/citas'
 import saludImg from './public/salud.png'
 
 document.querySelector('#app').innerHTML = `
   <div>
+
     <header>
         <img src="${saludImg}" class="logo"/>
         <h1 id="title">Bienvenido al Portal de Salud y Bienestar</h1>
@@ -62,34 +63,39 @@ document.querySelector('#app').innerHTML = `
           </tbody>
         </table>
       </section>
+      
+
+      <! -- the only part that I've modified --> 
       <section id="citas_section">
-        <h2>Citas</h2>
-        <div class="card">
+      <h2>Citas</h2>
+      <div class="card">
           <form id="cita_add_form">
-            <label for="paciente_cita_input">Id Paciente:</label>
-            <input type="number" name="id paciente" value="" placeholder="Ej. 1" id="paciente_cita_input" autocomplete="off" required>
-            <label for="doctor_cita_input">Doctor cita:</label>
-            <input type="text" name="Especialidad" placeholder="Ej. 2" id="doctor_cita_input" autocomplete="off" required>
-            <label for="date_cita_input">Doctor cita:</label>
-            <input type="date" name="Fecha" placeholder="Ingrese Fecha de Cita" id="date_cita_input" autocomplete="off" required>
-            <button type="submit" id="add_cita_button">Ingresar cita</button>
+              <label for="paciente_cita_input">Id Paciente:</label>
+              <input type="number" name="id paciente" placeholder="Ej. 1" id="paciente_cita_input" autocomplete="off" required>
+              <label for="doctor_cita_input">Doctor:</label>
+              <input type="text" name="doctor" placeholder="Ej. 2" id="doctor_cita_input" autocomplete="off" required>
+              <label for="date_cita_input">Fecha:</label>
+              <input type="date" name="Fecha" placeholder="Ingrese Fecha de Cita" id="date_cita_input" autocomplete="off" required>
+              <button type="submit" id="add_cita_button">Ingresar cita</button>
           </form>
-        </div>
-        <table>
+      </div>
+      <table>
           <thead>
-            <tr>
-              <th>ID</th>
-              <th>Paciente</th>
-              <th>Doctor</th>
-              <th>Fecha</th>
-              <th>Acciones</th>
-            </tr>
+              <tr>
+                  <th>ID</th>
+                  <th>Paciente</th>
+                  <th>Doctor</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
+              </tr>
           </thead>
           <tbody id="citas_rows">
           </tbody>
-        </table>
-      </section>
-    </main>
+      </table>
+  </section>
+  
+
+  </main>
   </div>
 `
 
